@@ -1,0 +1,31 @@
+{
+  "name": "excel",
+  "version": "1.0.0",
+  "description": "Pure JavaScript Excel Application",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack",
+    "build": "webpack --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ElGutiar/Excel.git"
+  },
+  "keywords": [
+    "js",
+    "javascript",
+    "excel"
+  ],
+  "author": "Zhade Anton <el12guitar@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ElGutiar/Excel/issues"
+  },
+  "homepage": "https://github.com/ElGutiar/Excel#readme",
+  "private": true,
+  "devDependencies": {
+    "webpack": "^5.11.1",
+    "webpack-cli": "^4.3.1"
+  }
+}
