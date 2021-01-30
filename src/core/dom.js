@@ -1,6 +1,5 @@
 class Dom {
   constructor(selector) {
-    this.$$listeners = {};
     this.$el =
       typeof selector === 'string'
         ? document.querySelector(selector)
@@ -21,7 +20,6 @@ class Dom {
   }
 
   on(eventType, callback) {
-    // this.$$listeners[eventType] = callback;
     this.$el.addEventListener(eventType, callback);
   }
 
