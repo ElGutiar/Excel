@@ -39,6 +39,10 @@ class Dom {
 
     return this;
   }
+
+  closest(selector) {
+    console.log(this.$el)
+  }
 }
 
 // $('div').html('<h1>Test</h1>').clear();
