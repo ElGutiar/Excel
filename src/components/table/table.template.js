@@ -5,10 +5,10 @@ const CODES = {
 
 const createRow = function(index, col) {
   const resize = index
-      ? '<div class="resize-row" data-resize="row"></div>'
-      : '';
+    ? '<div class="resize-row" data-resize="row"></div>'
+    : '';
   return `
-   <div class="row">
+   <div class="row" data-type="resizable">
       <div class="row-info">
         ${index ? index : ''}
         ${resize}
@@ -18,18 +18,18 @@ const createRow = function(index, col) {
   `;
 };
 
-const toColumn = function(char) {
+const toColumn = function(char, index) {
   return `
-    <div class="column" data-column="resizable">
+    <div class="column" data-type="resizable" data-col="${index}">
     ${char}
     <div class="resize-col" data-resize="col"></div>
     </div>
  `;
 };
 
-const toCell = function() {
+const toCell = function(_, index) {
   return `
-    <div class="cell" contenteditable></div>
+    <div class="cell" contenteditable data-col="${index}"></div>
   `;
 };
 
@@ -50,7 +50,10 @@ export function createTable(rowsCount = 15) {
   rows.push(createRow(null, columns));
 
   for (let i = 0; i < rowsCount; i++) {
-    const cell = new Array(columnCount).fill('').map(toCell).join('');
+    const cell = new Array(columnCount)
+        .fill('')
+        .map(toCell)
+        .join('');
     rows.push(createRow(i + 1, cell));
   }
 
