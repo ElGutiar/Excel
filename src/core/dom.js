@@ -40,6 +40,10 @@ class Dom {
     return this;
   }
 
+  findAll(selector) {
+    return this.$el.querySelectorAll(selector)
+  }
+
   closest(selector) {
     return $(this.$el.closest(selector));
   }
