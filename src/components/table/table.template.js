@@ -27,11 +27,24 @@ const toColumn = function(char, index) {
  `;
 };
 
-const toCell = function(_, index) {
-  return `
-    <div class="cell" contenteditable data-col="${index}"></div>
-  `;
-};
+// const toCell = function(_, index) {
+//   return `
+//     <div class="cell" contenteditable data-col="${index}"></div>
+//   `;
+// };
+
+const toCell = function(row) {
+  return function(_, col) {
+    return `
+        <div 
+        class="cell" 
+        contenteditable 
+        data-col="${col}"
+        data-id="${row}:${col}"
+        ></div>
+      `;
+  }
+}
 
 const goToChar = function(_, index) {
   return String.fromCharCode(CODES.A + index);
@@ -44,17 +57,18 @@ export function createTable(rowsCount = 15) {
   const columns = new Array(columnCount)
       .fill('')
       .map(goToChar)
+      // .map((_, col) => toCell(row, col))
       .map(toColumn)
       .join('');
 
   rows.push(createRow(null, columns));
 
-  for (let i = 0; i < rowsCount; i++) {
+  for (let row = 0; row < rowsCount; row++) {
     const cell = new Array(columnCount)
         .fill('')
-        .map(toCell)
+        .map(toCell(row))
         .join('');
-    rows.push(createRow(i + 1, cell));
+    rows.push(createRow(row + 1, cell));
   }
 
   return rows.join('');
