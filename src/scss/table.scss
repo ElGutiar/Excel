@@ -10,12 +10,14 @@
     padding: 2px;
     
     .row {
+        user-select: none;
         display: flex;
         min-height: 20px;
         height: $row-height;
     }
 
     .row-info {
+        position: relative;
         @include flex-center;
         min-width: $info-cell-width;
         height: 100%;
@@ -29,14 +31,15 @@
     }
 
     .column {
+        position: relative;
         @include flex-center;
         background: $table-color;
         width: $cell-width;
         min-width: 40px;
-         height: 100%;
-         border: 1px solid $border-color;
-         border-top: 0;
-         border-left: 0;
+        height: 100%;
+        border: 1px solid $border-color;
+        border-top: 0;
+        border-left: 0;
     }
 
     .cell {
@@ -59,4 +62,30 @@
             max-width: 100%;
         }
     }
+}
+
+.resize-col, .resize-row {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    transition: opacity .1s linear;
+    background-color: $color-prime;
+    z-index: 1000;
+
+    &:hover {
+        opacity: 1 !important;
+    }
+}
+
+.resize-col {
+    top: 0;
+    width: 4px;
+    cursor: col-resize;
+}
+
+.resize-row {
+    left: 0;
+    height: 4px;
+    cursor: row-resize ;
 }
