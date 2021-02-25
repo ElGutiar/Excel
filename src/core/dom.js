@@ -44,6 +44,13 @@ class Dom {
     return this.$el.querySelectorAll(selector)
   }
 
+  css(styles = {}) {
+    Object.keys(styles)
+        .forEach(key => {
+          this.$el.style[key] = styles[key]
+        })
+  }
+
   closest(selector) {
     return $(this.$el.closest(selector));
   }
@@ -56,8 +63,6 @@ class Dom {
     return this.$el.dataset
   }
 }
-
-// $('div').html('<h1>Test</h1>').clear();
 
 export function $(selector) {
   return new Dom(selector);

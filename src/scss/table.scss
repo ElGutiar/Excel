@@ -10,6 +10,7 @@
     padding: 2px;
     
     .row {
+        user-select: none;
         display: flex;
         min-height: 20px;
         height: $row-height;
@@ -70,9 +71,10 @@
     opacity: 0;
     transition: opacity .1s linear;
     background-color: $color-prime;
+    z-index: 1000;
 
     &:hover {
-        opacity: 1;
+        opacity: 1 !important;
     }
 }
 
