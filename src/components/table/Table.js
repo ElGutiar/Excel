@@ -4,14 +4,14 @@ import {TableSection} from './TableSelection'
 import {$} from '../../core/dom'
 
 import {resizeHandler} from './table.resize.js'
-import {shoudResize, isCell} from './table.utils'
+import {shoudResize, isCell, matrix} from './table.utils'
 
 export class Table extends ExcelComponent {
   static className = 'excel__table';
 
   constructor($root) {
     super($root, {
-      listeners: ['mousedown', 'mouseup', 'mousemove', 'click'],
+      listeners: ['mousedown', 'mouseup', 'mousemove'],
     });
   }
 
@@ -34,7 +34,13 @@ export class Table extends ExcelComponent {
       resizeHandler(event, this.$root)
     } else if (isCell(event)) {
       const $target = $(event.target)
-      this.selection.select($target)
+      if (event.shiftKey) {
+        const $cells = matrix($target, this.selection.current)
+            .map(id => this.$root.find(`[data-id="${id}"]`))
+        this.selection.selectGroup($cells)
+      } else {
+        this.selection.select($target)
+      }
     }
   }
 }

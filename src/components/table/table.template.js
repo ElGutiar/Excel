@@ -52,7 +52,6 @@ export function createTable(rowsCount = 15) {
   const columns = new Array(columnCount)
       .fill('')
       .map(goToChar)
-      // .map((_, col) => toCell(row, col))
       .map(toColumn)
       .join('');
 

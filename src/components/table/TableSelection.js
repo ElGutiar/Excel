@@ -3,6 +3,7 @@ export class TableSection {
 
   constructor() {
     this.group = []
+    this.current = null
   }
 
   clear() {
@@ -12,10 +13,14 @@ export class TableSection {
 
   select($el) {
     this.clear()
+    this.current = $el
     this.group.push($el)
     $el.addClass(TableSection.className)
   }
 
-  selectGroup() {
+  selectGroup($group = []) {
+    this.clear()
+    this.group = $group
+    this.group.forEach($el => $el.addClass(TableSection.className))
   }
 }
