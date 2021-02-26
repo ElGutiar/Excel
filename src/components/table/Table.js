@@ -1,9 +1,10 @@
 import { ExcelComponent } from '@core/ExcelComponent';
 import { createTable } from '@/components/table/table.template';
 import {TableSection} from './TableSelection'
+import {$} from '../../core/dom'
 
 import {resizeHandler} from './table.resize.js'
-import {shoudResize} from './table.utils'
+import {shoudResize, isCell} from './table.utils'
 
 export class Table extends ExcelComponent {
   static className = 'excel__table';
@@ -31,6 +32,9 @@ export class Table extends ExcelComponent {
   onMousedown(event) {
     if (shoudResize(event)) {
       resizeHandler(event, this.$root)
+    } else if (isCell(event)) {
+      const $target = $(event.target)
+      this.selection.select($target)
     }
   }
 }

@@ -27,12 +27,6 @@ const toColumn = function(char, index) {
  `;
 };
 
-// const toCell = function(_, index) {
-//   return `
-//     <div class="cell" contenteditable data-col="${index}"></div>
-//   `;
-// };
-
 const toCell = function(row) {
   return function(_, col) {
     return `
@@ -40,6 +34,7 @@ const toCell = function(row) {
         class="cell" 
         contenteditable 
         data-col="${col}"
+        data-type="cell"
         data-id="${row}:${col}"
         ></div>
       `;
