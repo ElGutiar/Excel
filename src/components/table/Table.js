@@ -4,14 +4,14 @@ import {TableSection} from './TableSelection'
 import {$} from '../../core/dom'
 
 import {resizeHandler} from './table.resize.js'
-import {shoudResize, isCell, matrix} from './table.utils'
+import {shoudResize, isCell, matrix, selectNext} from './table.utils'
 
 export class Table extends ExcelComponent {
   static className = 'excel__table';
 
   constructor($root) {
     super($root, {
-      listeners: ['mousedown', 'mouseup', 'mousemove'],
+      listeners: ['mousedown', 'keydown'],
     });
   }
 
@@ -30,7 +30,7 @@ export class Table extends ExcelComponent {
   }
 
   onMousedown(event) {
-    if (shoudResize(event)) {
+    if (shoudResize(event) && !event.shiftKey) {
       resizeHandler(event, this.$root)
     } else if (isCell(event)) {
       const $target = $(event.target)
@@ -41,6 +41,26 @@ export class Table extends ExcelComponent {
       } else {
         this.selection.select($target)
       }
+    }
+  }
+
+  onKeydown(event) {
+    const keys = [
+      'Enter',
+      'Tab',
+      'ArrowLeft',
+      'ArrowRight',
+      'ArrowDown',
+      'ArrowUp'
+    ]
+
+    const {key} = event
+
+    if (keys.includes(key)) {
+      event.preventDefault()
+      const current = this.selection.current.id(true)
+      const $next = this.$root.find(selectNext(key, current))
+      this.selection.select($next)
     }
   }
 }

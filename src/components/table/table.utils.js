@@ -25,3 +25,27 @@ export const matrix = ($target, $current) => {
     return acc
   }, [])
 }
+
+export function selectNext(key, {row, col}) {
+  const MIN_VALUE = 0
+  switch (key) {
+    case 'ArrowLeft':
+      col - 1 < MIN_VALUE ? col : col--
+      break
+
+    case 'ArrowRight':
+    case 'Tab':
+      col++
+      break
+
+    case 'ArrowDown':
+    case 'Enter':
+      row++
+      break
+
+    case 'ArrowUp':
+      row - 1 < MIN_VALUE ? col : row--
+      break
+  }
+  return `[data-id="${row}:${col}"]`
+}
