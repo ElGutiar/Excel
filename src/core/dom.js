@@ -48,6 +48,11 @@ class Dom {
     return $(this.$el.querySelector(selector))
   }
 
+  focus() {
+    this.$el.focus()
+    return this.$el
+  }
+
   css(styles = {}) {
     Object.keys(styles)
         .forEach(key => {
@@ -56,7 +61,7 @@ class Dom {
   }
 
   addClass(className) {
-    return this.$el.classList.add(className)
+    return this.focus().classList.add(className)
   }
 
   removeClass(className) {
