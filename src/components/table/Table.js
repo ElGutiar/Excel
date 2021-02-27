@@ -9,14 +9,21 @@ import {shoudResize, isCell, matrix, selectNext} from './table.utils'
 export class Table extends ExcelComponent {
   static className = 'excel__table';
 
-  constructor($root) {
+  constructor($root, options) {
     super($root, {
-      listeners: ['mousedown', 'keydown'],
+      name: 'Table',
+      listeners: ['mousedown', 'keydown', 'input'],
+      ...options
     });
   }
 
   prepare() {
     this.selection = new TableSection()
+  }
+
+  selectCell($cell) {
+    this.selection.select($cell)
+    this.$emit('table:select', $cell)
   }
 
   toHTML() {
@@ -25,12 +32,18 @@ export class Table extends ExcelComponent {
 
   init() {
     super.init()
-    const $cell = this.$root.find('[data-id="0:0"]')
-    this.selection.select($cell)
+    this.selectCell(this.$root.find('[data-id="0:0"]'))
+
+    this.$on('formula:input', text => {
+      this.selection.current.text(text)
+    })
+    this.$on('formula:done', () => {
+      this.selection.current.focus()
+    })
   }
 
   onMousedown(event) {
-    if (shoudResize(event) && !event.shiftKey) {
+    if (shoudResize(event)) {
       resizeHandler(event, this.$root)
     } else if (isCell(event)) {
       const $target = $(event.target)
@@ -55,12 +68,16 @@ export class Table extends ExcelComponent {
     ]
 
     const {key} = event
+    this.$emit('table:input', $(event.target).text())
 
-    if (keys.includes(key)) {
+    if (keys.includes(key) && !event.shiftKey) {
       event.preventDefault()
       const current = this.selection.current.id(true)
-      const $next = this.$root.find(selectNext(key, current))
-      this.selection.select($next)
+      this.selectCell(this.$root.find(selectNext(key, current)))
     }
+  }
+
+  onInput(event) {
+    this.$emit('table:input', $(event.target).text())
   }
 }

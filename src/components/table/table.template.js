@@ -31,7 +31,8 @@ const toCell = function(row) {
   return function(_, col) {
     return `
         <div 
-        class="cell" 
+        class="cell"
+        onfocus="this.value"
         contenteditable 
         data-col="${col}"
         data-type="cell"
