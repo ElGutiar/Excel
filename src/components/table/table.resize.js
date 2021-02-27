@@ -17,12 +17,14 @@ export const resizeHandler = (event, $root) => {
     if (type === 'col') {
       const delta = e.pageX - coords.right;
       value = coords.width + delta;
+
       $resizeTarget.css({
         right: -delta + 'px',
       })
     } else {
       const delta = e.pageY - coords.bottom
       value = coords.height + delta
+
       $resizeTarget.css({
         bottom: -delta + 'px'
       })
