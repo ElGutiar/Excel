@@ -15,7 +15,7 @@ export class TableSection {
     this.clear()
     this.current = $el
     this.group.push($el)
-    $el.addClass(TableSection.className)
+    $el.addClass(TableSection.className).focus()
   }
 
   selectGroup($group = []) {

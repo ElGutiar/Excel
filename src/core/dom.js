@@ -72,11 +72,13 @@ class Dom {
   }
 
   addClass(className) {
-    return this.focus().classList.add(className)
+    this.$el.classList.add(className)
+    return this
   }
 
   removeClass(className) {
-    return this.$el.classList.remove(className)
+    this.$el.classList.remove(className)
+    return this
   }
 
   closest(selector) {
