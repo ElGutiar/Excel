@@ -4,25 +4,40 @@ const CODES = {
 };
 
 const DEFAULT_WIDTH = 120
+const DEFAULT_HEIGHT = 20
 
-function getWidth(state, index) {
-  return (state[index] || DEFAULT_WIDTH) + 'px'
+function getMeasure(state = {}, index, measure) {
+  switch (measure) {
+    case 'width':
+      return (state[index] || DEFAULT_WIDTH) + 'px'
+
+    case 'height':
+      return (state[index] || DEFAULT_HEIGHT) + 'px'
+
+    default: return measure
+  }
 }
 
 function withWidthFrom(state) {
   return function(char, index) {
     return {
-      char, index, width: getWidth(state.colState, index)
+      char, index, width: getMeasure(state, index, 'width')
     }
   }
 }
 
-const createRow = function(index, col) {
+const createRow = function(index, col, state) {
+  const height = getMeasure(state, index, 'height')
   const resize = index
     ? '<div class="resize-row" data-resize="row"></div>'
     : '';
   return `
-   <div class="row" data-type="resizable">
+   <div 
+    class="row"
+    style="height: ${height}"
+    data-type="resizable"
+    data-row="${index}"
+   >
       <div class="row-info">
         ${index ? index : ''}
         ${resize}
@@ -48,7 +63,7 @@ const toColumn = function({char, index, width}) {
 
 const toCell = function(state, row) {
   return function(_, index) {
-    const width = getWidth(state.colState, index)
+    const width = getMeasure(state, index, 'width')
     return `
         <div 
         class="cell"
@@ -68,14 +83,13 @@ const goToChar = function(_, index) {
 };
 
 export function createTable(rowsCount = 15, state) {
-  console.log('Template', state)
   const columnCount = CODES.Z - CODES.A + 1;
   const rows = [];
 
   const columns = new Array(columnCount)
       .fill('')
       .map(goToChar)
-      .map(withWidthFrom(state))
+      .map(withWidthFrom(state.colState))
       .map(toColumn)
       .join('');
 
@@ -84,9 +98,9 @@ export function createTable(rowsCount = 15, state) {
   for (let row = 0; row < rowsCount; row++) {
     const cell = new Array(columnCount)
         .fill('')
-        .map(toCell(state, row))
+        .map(toCell(state.colState, row))
         .join('');
-    rows.push(createRow(row + 1, cell));
+    rows.push(createRow(row + 1, cell, state.rowState));
   }
 
   return rows.join('');

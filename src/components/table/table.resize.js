@@ -45,9 +45,9 @@ export const resizeHandler = (event, $root) => {
         }
         resolve({
           value,
-          id: type === 'col' ? $parent.data.col : null
+          type,
+          id: $parent.data[type]
         })
-
 
         $resizeTarget.css({
           right: 0,
