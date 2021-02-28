@@ -63,17 +63,19 @@ const toColumn = function({char, index, width}) {
 
 const toCell = function(state, row) {
   return function(_, index) {
-    const width = getMeasure(state, index, 'width')
+    const id = `${row}:${index}`
+    const width = getMeasure(state.colState, index, 'width')
+    const data = state.dataState[id]
     return `
-        <div 
+        <div
         class="cell"
         style="width: ${width}"
         onfocus="this.value"
         contenteditable 
         data-col="${index}"
         data-type="cell"
-        data-id="${row}:${index}"
-        ></div>
+        data-id="${id}"
+        >${data || ''}</div>
       `;
   }
 }
@@ -98,7 +100,7 @@ export function createTable(rowsCount = 15, state) {
   for (let row = 0; row < rowsCount; row++) {
     const cell = new Array(columnCount)
         .fill('')
-        .map(toCell(state.colState, row))
+        .map(toCell(state, row))
         .join('');
     rows.push(createRow(row + 1, cell, state.rowState));
   }
