@@ -1,10 +1,10 @@
 import { ExcelComponent } from '@core/ExcelComponent';
 import { createTable } from '@/components/table/table.template';
 import {TableSection} from './TableSelection'
-import {$} from '../../core/dom'
-
+import {$} from '@core/dom'
 import {resizeHandler} from './table.resize.js'
 import {shoudResize, isCell, matrix, selectNext} from './table.utils'
+import * as actions from '@/redux/actions'
 
 export class Table extends ExcelComponent {
   static className = 'excel__table';
@@ -28,7 +28,7 @@ export class Table extends ExcelComponent {
   }
 
   toHTML() {
-    return createTable(12);
+    return createTable(12, this.store.getState());
   }
 
   init() {
@@ -43,13 +43,22 @@ export class Table extends ExcelComponent {
     })
 
     this.$subscribe(state => {
-      console.log('TableState', state)
+
     })
+  }
+
+  async resizeTable(event) {
+    try {
+      const data = await resizeHandler(event, this.$root)
+      this.$dispatch(actions.tableResize(data))
+    } catch (error) {
+      console.warn(error.message)
+    }
   }
 
   onMousedown(event) {
     if (shoudResize(event)) {
-      resizeHandler(event, this.$root)
+      this.resizeTable(event)
     } else if (isCell(event)) {
       const $target = $(event.target)
       if (event.shiftKey) {
