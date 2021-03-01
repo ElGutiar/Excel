@@ -5,6 +5,7 @@ const defaultState = {
   colState: {},
   dataState: {},
   currentText: '',
+  headerName: 'Новая таблица'
 }
 
 export const initialState = storage('excel-state')
