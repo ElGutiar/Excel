@@ -4,7 +4,7 @@ import {TableSection} from './TableSelection'
 import {resizeHandler} from './table.resize.js'
 import {shoudResize, isCell, matrix, selectNext} from './table.utils'
 import * as actions from '@/redux/actions'
-import {defaultStyles} from '@/constans'
+import {defaultStyles} from '@/constants'
 import {$} from '@core/dom'
 
 export class Table extends ExcelComponent {
@@ -26,7 +26,9 @@ export class Table extends ExcelComponent {
     this.selection.select($cell)
     this.$emit('table:select', $cell)
 
-    console.log($cell.getStyle(Object.keys(defaultStyles)))
+    const styles = $cell.getStyle(Object.keys(defaultStyles))
+    this.$dispatch(actions.changeStyles(styles))
+    console.log('dispa from table', styles)
   }
 
   toHTML() {
@@ -46,8 +48,12 @@ export class Table extends ExcelComponent {
       this.selection.current.focus()
     })
 
-    this.$on('toolbar:applyStyle', style => {
+    this.$on('toolbar:applyStyle', value => {
       this.selection.applyStyle(style)
+      this.$dispatch(actions.applyStyle({
+        value,
+        ids: this.selection.selectedIds
+      }))
     })
   }
 

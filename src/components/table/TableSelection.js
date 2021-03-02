@@ -11,6 +11,10 @@ export class TableSection {
     this.group = []
   }
 
+  get selectedIds() {
+    return this.group.map($el => $el.id())
+  }
+
   select($el) {
     this.clear()
     this.current = $el

@@ -1,3 +1,6 @@
+import {defaultStyles} from '@/constants'
+import {camelToDashCase} from '@/core/utils'
+
 const CODES = {
   A: 65,
   Z: 90,
@@ -66,10 +69,14 @@ const toCell = function(state, row) {
     const id = `${row}:${index}`
     const width = getMeasure(state.colState, index, 'width')
     const data = state.dataState[id]
+    const styles = Object.keys(defaultStyles)
+        .map(key => `${key}: ${defaultStyles[key]}`)
+        .map(camelToDashCase)
+        .join(';')
     return `
         <div
         class="cell"
-        style="width: ${width}"
+        style="${styles}; width: ${width}"
         onfocus="this.value"
         contenteditable 
         data-col="${index}"
