@@ -23,4 +23,8 @@ export class TableSection {
     this.group = $group
     this.group.forEach($el => $el.addClass(TableSection.className))
   }
+
+  applyStyle(style) {
+    this.group.forEach($el => $el.css(style))
+  }
 }

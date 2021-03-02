@@ -1,10 +1,11 @@
 import { ExcelComponent } from '@core/ExcelComponent';
 import { createTable } from '@/components/table/table.template';
 import {TableSection} from './TableSelection'
-import {$} from '@core/dom'
 import {resizeHandler} from './table.resize.js'
 import {shoudResize, isCell, matrix, selectNext} from './table.utils'
 import * as actions from '@/redux/actions'
+import {defaultStyles} from '@/constans'
+import {$} from '@core/dom'
 
 export class Table extends ExcelComponent {
   static className = 'excel__table';
@@ -24,6 +25,8 @@ export class Table extends ExcelComponent {
   selectCell($cell) {
     this.selection.select($cell)
     this.$emit('table:select', $cell)
+
+    console.log($cell.getStyle(Object.keys(defaultStyles)))
   }
 
   toHTML() {
@@ -41,6 +44,10 @@ export class Table extends ExcelComponent {
 
     this.$on('formula:done', () => {
       this.selection.current.focus()
+    })
+
+    this.$on('toolbar:applyStyle', style => {
+      this.selection.applyStyle(style)
     })
   }
 
