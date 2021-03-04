@@ -5,8 +5,8 @@ const defaultState = {
   rowState: {},
   colState: {},
   dataState: {},
+  styleState: {},
   currentText: '',
-  stylesState: {},
   headerName: 'Новая таблица',
   currentStyles: defaultStyles
 }

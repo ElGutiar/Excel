@@ -32,12 +32,14 @@ export function toInlineStyles(styles = {}) {
 
 export function debounce(fn, wait) {
   let timeout
+
   return function(...args) {
     const later = () => {
       clearTimeout(timeout)
       // eslint-disable-next-line
-      fn.apply(this, ...args)
+      fn.apply(this, args)
     }
+
     clearTimeout(timeout)
     timeout = setTimeout(later, wait)
   }
