@@ -15,7 +15,7 @@ class Dom {
   }
 
   text(text) {
-    if (typeof text === 'string') {
+    if (typeof text !== 'undefined') {
       this.$el.textContent = text
       return this
     }
@@ -28,6 +28,14 @@ class Dom {
   clear() {
     this.html('');
     return this;
+  }
+
+  attr(name, value) {
+    if (value) {
+      this.$el.setAttribute(name, value)
+      return this
+    }
+    return this.$el.getAttribute(name)
   }
 
   on(eventType, callback) {
@@ -71,12 +79,21 @@ class Dom {
         })
   }
 
+  getStyle(styles = []) {
+    return styles.reduce((res, s) => {
+      res[s] = this.$el.style[s]
+      return res
+    }, {})
+  }
+
   addClass(className) {
-    return this.focus().classList.add(className)
+    this.$el.classList.add(className)
+    return this
   }
 
   removeClass(className) {
-    return this.$el.classList.remove(className)
+    this.$el.classList.remove(className)
+    return this
   }
 
   closest(selector) {
