@@ -1,15 +1,15 @@
-export function headerTemplate(store) {
+export function headerTemplate(state) {
   return `
     <input class="input" id="input-header" type="text"
-     value="${store.headerName}">
+     value="${state.headerName}">
 
     <div>
-        <div class="button">
-            <span class="material-icons">exit_to_app</span>
-        </div>
-
-        <div class="button">
-            <span class="material-icons">delete</span>
+        <a href="#" class="button" data-button="exit">
+            <span class="material-icons" data-button="exit">exit_to_app</span>
+        </a>
+    
+        <div class="button" data-button="remove">
+            <span class="material-icons" data-button="remove">delete</span>
         </div>
     </div>
     `;
