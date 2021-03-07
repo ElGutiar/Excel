@@ -1,8 +1,15 @@
-function toHTML() {
+import {storage} from '@/core/utils'
+
+function toHTML(key) {
+  const hash = key.split(':')[1]
+  const model = storage(key)
   return `
     <li class="db__record">
-      <a href="#">Таблица номер 1</a>
-      <strong>12.06.20</strong>
+      <a href="#excel/${hash}">${model.headerName}</a>
+      <strong>
+        ${new Date(model.openedDate).toLocaleDateString()}
+        ${new Date(model.openedDate).toLocaleTimeString()}
+      </strong>
     </li> 
    `
 }
