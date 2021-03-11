@@ -1,10 +1,10 @@
-import { ExcelComponent } from '@core/ExcelComponent';
+import { ExcelComponent } from '../../core/ExcelComponent';
 import {headerTemplate} from './header.template'
-import * as actions from '@/redux/actions'
-import { debounce } from '@/core/utils';
-import { filterStorage } from '@/components/header/header.functions';
-import { $ } from '@core/dom';
-import { ActiveRoute } from '@core/routes/ActiveRoute';
+import * as actions from '../../redux/actions'
+import { debounce } from '../../core/utils';
+import { filterStorage } from './header.functions';
+import { $ } from '../../core/dom';
+import { ActiveRoute } from '../../core/routes/ActiveRoute';
 
 export class Header extends ExcelComponent {
   static className = 'excel__header';

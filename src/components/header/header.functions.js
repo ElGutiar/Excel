@@ -1,4 +1,4 @@
-import { ActiveRoute } from '@core/routes/ActiveRoute';
+import { ActiveRoute } from '../../core/routes/ActiveRoute';
 
 export function filterStorage() {
   const accept = confirm('Do you want to delete this table?')
